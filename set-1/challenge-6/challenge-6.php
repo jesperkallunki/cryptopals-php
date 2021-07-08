@@ -1,6 +1,6 @@
 <?php
 
-$input = file_get_contents(__DIR__ . "/challenge-6.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+$input = file_get_contents(__DIR__ . "/input.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
 $input = base64_decode($input);
 
@@ -158,7 +158,7 @@ foreach ($transposedBlocks as $input) {
 
 echo "Key: $key\n\n";
 
-$input = file_get_contents(__DIR__ . "/challenge-6.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+$input = file_get_contents(__DIR__ . "/input.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
 $input = base64_decode($input);
 

@@ -57,3 +57,5 @@ $sort = array_column($results, "score");
 array_multisort($sort, SORT_DESC, $results);
 
 echo "Using " . $results[0]->char . " as key: " . $results[0]->output . "\n";
+echo "Using " . $results[1]->char . " as key: " . $results[1]->output . "\n";
+echo "Using " . $results[2]->char . " as key: " . $results[2]->output . "\n";

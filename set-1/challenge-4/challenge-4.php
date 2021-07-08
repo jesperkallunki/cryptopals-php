@@ -8,7 +8,7 @@ class Result {
 
 }
 
-$inputs = file(__DIR__ . "/challenge-4.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+$inputs = file(__DIR__ . "/input.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
 $inputs = array_map("hex2bin", $inputs);
 
@@ -63,3 +63,5 @@ $sort = array_column($results, "score");
 array_multisort($sort, SORT_DESC, $results);
 
 echo "Using " . $results[0]->char . " as key: " . $results[0]->output . "\n";
+echo "Using " . $results[1]->char . " as key: " . $results[1]->output . "\n";
+echo "Using " . $results[2]->char . " as key: " . $results[2]->output . "\n";
