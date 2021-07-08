@@ -103,6 +103,8 @@ class Output {
 
 }
 
+$key = null;
+
 foreach ($transposedBlocks as $input) {
     
     $results = [];
@@ -114,16 +116,23 @@ foreach ($transposedBlocks as $input) {
         $score = 0;
 
         $letters = range("a", "z");
+
+        $freqs = [
+            0.08167, 0.01492, 0.02782, 0.04253, 0.12702, 0.02228, 0.02015,
+            0.06094, 0.06966, 0.00153, 0.00772, 0.04025, 0.02406, 0.06749,
+            0.07507, 0.01929, 0.00095, 0.05987, 0.06327, 0.09056, 0.02758,
+            0.00978, 0.02360, 0.00150, 0.01974, 0.00074
+        ];
     
         $characters = str_split($output, 1);
     
-        foreach ($letters as $letter) {
+        foreach ($letters as $j => $letter) {
     
-            foreach ($characters as $character) {
+            foreach ($characters as $k => $character) {
     
                 if ($character == $letter) {
     
-                    $score++;
+                    $score += $freqs[$j];
     
                 }
         
@@ -143,6 +152,18 @@ foreach ($transposedBlocks as $input) {
 
     array_multisort($sort, SORT_DESC, $results);
 
-    echo $results[0]->char;
+    $key .= $results[0]->char;
 
 }
+
+echo "Key: $key\n\n";
+
+$input = file_get_contents(__DIR__ . "/challenge-6.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+$input = base64_decode($input);
+
+$key = substr(str_repeat($key, strlen($input)), 0, strlen($input));
+
+$output = $input ^ $key;
+
+echo $output;
