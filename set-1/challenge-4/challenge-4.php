@@ -2,6 +2,7 @@
 
 class Result {
 
+    public $char;
     public $output;
     public $score;
 
@@ -40,6 +41,7 @@ foreach ($inputs as $input) {
         }
 
         $result = New Result;
+        $result->char = chr($i);
         $result->output = $output;
         $result->score = $score;
 
@@ -63,7 +65,7 @@ foreach ($results as $result) {
 
     }
 
-    echo $result->output . "\n";
+    echo "Using " . $result->char . " as key: " . $result->output . "\n";
 
     $j++;
 
