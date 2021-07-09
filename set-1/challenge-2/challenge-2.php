@@ -6,7 +6,7 @@ $b = "686974207468652062756c6c277320657965";
 $a = hex2bin($a);
 $b = hex2bin($b);
 
-if (strlen($a) === strlen($b)) {
+if (strlen($a) == strlen($b)) {
 
     $a ^= $b;
 

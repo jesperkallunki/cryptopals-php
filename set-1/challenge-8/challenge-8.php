@@ -5,7 +5,7 @@ $input = file(__DIR__ . "/input.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LI
 $input = array_map("hex2bin", $input);
 
 # "Remember that the problem with ECB is that it is stateless and deterministic; the same 16 byte plaintext block will always produce the same 16 byte ciphertext."
-# This means we should split each ciphertext into blocks with each having a max size/length of 16. From those blocks we will search for repeating values.
+# Split each ciphertext into blocks with each having a max size/length of 16. From those blocks we will search for repeating values.
 
 foreach ($input as $ciphertext) {
 
@@ -15,7 +15,7 @@ foreach ($input as $ciphertext) {
 
     }
 
-    # We find repeating blocks by removing duplicate values from the blocks array and comparing the count of that to the count of the unmodified blocks array.
+    # Find repeating blocks by removing duplicate values from the blocks array and comparing the count of that to the count of the unmodified blocks array.
     # If the count doesn't match we found an ECB encrypted ciphertext.
 
     if (count($blocks) != count(array_unique($blocks))) echo bin2hex($ciphertext) . "\n";

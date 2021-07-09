@@ -2,8 +2,8 @@
 
 class Result {
 
-    public $char;
-    public $output;
+    public $key;
+    public $message;
     public $score;
 
 }
@@ -12,13 +12,19 @@ $input = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736";
 
 $input = hex2bin($input);
 
-for ($i = 0; $i < 256; $i++) {
+# The total number of ASCII characters is 256 (0-255).
+# XOR the input againt each ASCII character.
 
-    $output = $input ^ str_repeat(chr($i), strlen($input));
+for ($i = 0; $i < 256; $i++) {
+    
+    $output = $input ^ str_repeat(chr($i), strlen($input)); # Convert the ASCII number to corresponding character and repeat until it matches the length of the input.
+
+    # Create a scoring system for detecting outputs which make most sense.
 
     $score = 0;
 
-    $letters = range("a", "z");
+    # http://cs.wellesley.edu/~fturbak/codman/letterfreq.html
+    # This scoring system makes use of letter frequencies, diagrams and triagrams.
 
     $freqs = [
         0.08167, 0.01492, 0.02782, 0.04253, 0.12702, 0.02228, 0.02015,
@@ -27,13 +33,22 @@ for ($i = 0; $i < 256; $i++) {
         0.00978, 0.02360, 0.00150, 0.01974, 0.00074
     ];
 
-    $characters = str_split($output, 1);
+    $diagr = [
+        "th", "he", "in", "en", "nt", "re", "er", "an", "ti", "es", "on", 
+        "at", "se", "nd", "or", "ar", "al", "te", "co", "de", "to", "ra", 
+        "et", "ed", "it", "sa", "em", "ro"
+    ];
 
-    foreach ($letters as $j => $letter) {
+    $triagr = [
+        "the", "and", "tha", "ent", "ing", "ion", "tio", "for", "nde", "has", 
+        "nce", "edt", "tis", "oft", "sth", "men" 
+    ];
 
-        foreach ($characters as $character) {
+    foreach (range("a", "z") as $j => $letter) {
 
-            if ($character == $letter) {
+        foreach (str_split($output) as $char) {
+
+            if ($char == $letter) {
     
                 $score += $freqs[$j];
 
@@ -43,19 +58,43 @@ for ($i = 0; $i < 256; $i++) {
 
     }
 
+    foreach (str_split($output, 2) as $block) {
+
+        if (in_array($block, $diagr)) {
+    
+            $score ++;
+
+        }
+
+    }
+
+    foreach (str_split($output, 3) as $block) {
+
+        if (in_array($block, $triagr)) {
+    
+            $score ++;
+
+        }
+
+    }
+
     $result = New Result;
-    $result->char = chr($i);
-    $result->output = $output;
+    $result->key = chr($i);
+    $result->message = $output;
     $result->score = $score;
 
     $results[] = $result;
 
 }
 
+# Sort the results by score and display some of the highest scoring results.
+
 $sort = array_column($results, "score");
 
 array_multisort($sort, SORT_DESC, $results);
 
-echo "Using " . $results[0]->char . " as key: " . $results[0]->output . "\n";
-echo "Using " . $results[1]->char . " as key: " . $results[1]->output . "\n";
-echo "Using " . $results[2]->char . " as key: " . $results[2]->output . "\n";
+echo "Key " .  $results[0]->key . ": " . $results[0]->message . "\n";
+echo "Key " .  $results[1]->key . ": " . $results[1]->message . "\n";
+echo "Key " .  $results[2]->key . ": " . $results[2]->message . "\n";
+echo "Key " .  $results[3]->key . ": " . $results[3]->message . "\n";
+echo "Key " .  $results[4]->key . ": " . $results[4]->message . "\n";
