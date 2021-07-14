@@ -12,7 +12,7 @@ $input = file(__DIR__ . "/input.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LI
 
 $input = array_map("hex2bin", $input);
 
-# This is similar to the previous challence except we just have multiple ciphertexts.
+# This is similar to the previous challenge except we just have multiple ciphertexts.
 
 foreach ($input as $ciphertext) {
     

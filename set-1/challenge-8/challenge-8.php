@@ -18,7 +18,11 @@ foreach ($input as $ciphertext) {
     # Find repeating blocks by removing duplicate values from the blocks array and comparing the count of that to the count of the unmodified blocks array.
     # If the count doesn't match we found an ECB encrypted ciphertext.
 
-    if (count($blocks) != count(array_unique($blocks))) echo bin2hex($ciphertext) . "\n";
+    if (count($blocks) != count(array_unique($blocks))) {
+        
+        echo bin2hex($ciphertext) . "\n";
+
+    }
 
     # Optionally we could do some sort of a scoring system e.g. based on the difference of $blocks and array_unique($blocks).
 
